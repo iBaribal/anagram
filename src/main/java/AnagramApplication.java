@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 public class AnagramApplication {
 
+    String alphabet = "abcdefghijklmnoqrstuvwxyz!-. ";
+
     public static void main(String[] args) throws IOException {
 
         long start = System.nanoTime();
@@ -25,26 +27,28 @@ public class AnagramApplication {
         StringBuilder sb = new StringBuilder();
         String currentLine;
 
+        // sorted character array of the word we are searching anagram for.
+        char[] fromWordChars = word.toCharArray();
+        Arrays.sort(fromWordChars);
+
         try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(location), StandardCharsets.ISO_8859_1))) {
             while((currentLine = br.readLine()) != null) {
-                if(isAnagram(word, currentLine, isMultiWord)) sb.append(",").append(currentLine);
+                if(isAnagram(fromWordChars, word, currentLine, isMultiWord)) sb.append(",").append(currentLine);
             }
         }
 
         return sb.toString();
     }
 
-    private static boolean isAnagram(String fromWord, String compareTo, boolean isMultiWord) {
+    private static boolean isAnagram(char[] fromWordChars, String fromWord, String compareTo, boolean isMultiWord) {
 
         if(fromWord.equals(compareTo)) return false; // not the same word
         if(fromWord.length() != compareTo.length()) return false; // word length does not match
         if(isMultiWord && !compareTo.contains(" ")) return false; // multi-word or single word?
 
-        char[] from = fromWord.toCharArray();
         char[] to = compareTo.toCharArray();
-
-        Arrays.sort(from);
         Arrays.sort(to);
-        return Arrays.equals(from, to);
+
+        return Arrays.equals(fromWordChars, to);
     }
 }
