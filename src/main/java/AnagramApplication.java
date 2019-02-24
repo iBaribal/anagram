@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class AnagramApplication {
 
@@ -15,9 +16,9 @@ public class AnagramApplication {
         String word = isMultiWord ? String.join(" ", args[1], args[2]) : args[1];
 
         String result = solve(dictionaryLocation, word, isMultiWord);
-        long time = (System.nanoTime() - start) / 1000;
+        long difference = TimeUnit.NANOSECONDS.toMicros(System.nanoTime() - start);
 
-        System.out.println(time + result);
+        System.out.println(difference + result);
     }
 
     private static String solve(String location, String word, boolean isMultiWord) throws IOException {
