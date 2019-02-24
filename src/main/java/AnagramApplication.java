@@ -7,8 +7,6 @@ import java.util.Arrays;
 
 public class AnagramApplication {
 
-    String alphabet = "abcdefghijklmnoqrstuvwxyz!-. ";
-
     public static void main(String[] args) throws IOException {
 
         long start = System.nanoTime();
@@ -42,9 +40,9 @@ public class AnagramApplication {
 
     private static boolean isAnagram(char[] fromWordChars, String fromWord, String compareTo, boolean isMultiWord) {
 
-        if(fromWord.equals(compareTo)) return false; // not the same word
         if(fromWord.length() != compareTo.length()) return false; // word length does not match
         if(isMultiWord && !compareTo.contains(" ")) return false; // multi-word or single word?
+        if(fromWord.equals(compareTo)) return false; // not the same word
 
         char[] to = compareTo.toCharArray();
         Arrays.sort(to);
